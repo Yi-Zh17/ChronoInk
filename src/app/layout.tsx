@@ -34,7 +34,9 @@ export default function RootLayout({
 						<NavLinks />
 						<SettingsLink />
 					</div>
-					{children}
+					<div className="p-10 bg-gray-200 w-full h-screen">
+						{children}
+					</div>
 				</div>
 			</body>
 		</html>
