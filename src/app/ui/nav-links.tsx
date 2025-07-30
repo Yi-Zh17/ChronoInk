@@ -33,7 +33,7 @@ export default function NavLinks() {
                     <Link
                         key={link.name}
                         href={link.href}
-                        className='m-0 p-4 size-20 border border-gray-700 flex flex-col items-center'>
+                        className='m-0 p-4 size-20 flex flex-col items-center hover:bg-gray-100'>
                             <LinkIcon />
                             <p>{link.name}</p>
                         </Link>
