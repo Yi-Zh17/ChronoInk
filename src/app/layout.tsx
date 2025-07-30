@@ -30,11 +30,11 @@ export default function RootLayout({
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
 				<div className="flex">
-					<div className="flex flex-col">
+					<div className="flex flex-col divide-y-2 divide-gray-300">
 						<NavLinks />
 						<SettingsLink />
 					</div>
-					<div className="p-10 bg-gray-200 w-full h-screen">
+					<div className="p-8 bg-gray-200 w-full h-screen">
 						{children}
 					</div>
 				</div>
