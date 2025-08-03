@@ -1,3 +1,4 @@
+'use server';
 import { neon } from '@neondatabase/serverless';
 import { Todo } from './definition';
 

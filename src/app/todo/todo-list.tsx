@@ -11,7 +11,7 @@ export default function TodoList({todos} : {todos: Todo[]}) {
                         key={todo.id}
                         className='flex space-x-20 flex-col'
                     >
-                        <h2 className='size-12'>{todo.title}</h2>
+                        <h2 className='text-xl font-medium'>{todo.title}</h2>
                         <div className='ml-auto'>
                             <p>Deadline: {new Date(todo.deadline).toLocaleString(undefined, {
                                 hour12: false,

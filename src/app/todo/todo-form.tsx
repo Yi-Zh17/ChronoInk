@@ -3,9 +3,12 @@ import { useState, useTransition } from 'react';
 import { Dialog } from '@headlessui/react';
 import { Plus } from 'lucide-react';
 import { postTodos } from '../lib/data';
+import {useRouter} from 'next/navigation';
 
 
 export default function AddTodo() {
+  const router = useRouter();
+  
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [deadline, setDeadline] = useState('');
@@ -22,6 +25,7 @@ export default function AddTodo() {
       setDeadline('');
       setNotes('');
       setIsOpen(false);
+      router.refresh();
     });
   };
 
