@@ -6,8 +6,8 @@ export default async function TodoPage() {
     const todos = await fetchTodos();
     return (
         <>
-            <TodoForm onTodoAdded={fetchTodos}/>
-            <TodoList todos={todos} fetchTodos={fetchTodos} />
+            <TodoForm />
+            <TodoList todos={todos} />
         </>
     );
 }

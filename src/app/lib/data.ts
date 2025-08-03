@@ -1,14 +1,27 @@
-import postgres from 'postgres';
+import { neon } from '@neondatabase/serverless';
 import { Todo } from './definition';
 
-const sql = postgres(process.env.POSTGRES_URL!, {ssl: 'require'});
+const sql = neon(`${process.env.DATABASE_URL}`);
 
 export async function fetchTodos() {
     try{
-        const data = await sql<Todo[]>`SELECT * FROM REVENUE`;
+        const data = await sql`SELECT * FROM todos`;
         return data;
     } catch(error) {
         console.error('Database error:', error);
         throw new Error('Failed to fetch todo data.');
     }
 }
+
+export async function postTodos(formData: FormData) {
+    const title = formData.get('title') as string;
+    const deadline = formData.get('deadline') as string;
+    const notes = formData.get('notes') as string;
+
+    if (!title.trim()) return;
+
+    await sql`
+      INSERT INTO todos (title, completed, deadline, created_at, notes)
+      VALUES (${title.trim()}, false, ${deadline ? new Date(deadline).toISOString() : null}, ${new Date().toISOString()}, ${notes || null})
+    `;
+  }
