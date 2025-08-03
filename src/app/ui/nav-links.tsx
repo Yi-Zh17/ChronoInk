@@ -14,15 +14,15 @@ class link {
     }
 }
 
-let home = new link(House, "Home", "/");
-let stats = new link(ChartColumn, "Stats", "/stats")
-let habits = new link(Sprout, "Habits", "habits");
-let calendar = new link(CalendarDays, "Calendar", "calendar");
-let todo = new link(LayoutList, "Todo", "todo");
+const home = new link(House, "Home", "/");
+const stats = new link(ChartColumn, "Stats", "/stats")
+const habits = new link(Sprout, "Habits", "habits");
+const calendar = new link(CalendarDays, "Calendar", "calendar");
+const todo = new link(LayoutList, "Todo", "todo");
 
-let settings = new link(Settings, "Settings", "settings")
+const settings = new link(Settings, "Settings", "settings")
 
-let links = [home, stats, habits, calendar, todo];
+const links = [home, stats, habits, calendar, todo];
 
 export default function NavLinks() {
     return (
