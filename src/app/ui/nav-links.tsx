@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import {House, ChartColumn, CalendarDays, LayoutList, Settings, Sprout} from 'lucide-react';
+import {House, ChartColumn, CalendarDays, LayoutList, Sprout} from 'lucide-react';
 
 
 class link {
@@ -19,8 +19,6 @@ const stats = new link(ChartColumn, "Stats", "/stats")
 const habits = new link(Sprout, "Habits", "habits");
 const calendar = new link(CalendarDays, "Calendar", "calendar");
 const todo = new link(LayoutList, "Todo", "todo");
-
-const settings = new link(Settings, "Settings", "settings")
 
 const links = [home, stats, habits, calendar, todo];
 

@@ -3,11 +3,11 @@ import { Todo } from './definition';
 
 const sql = neon(`${process.env.DATABASE_URL}`);
 
-export async function fetchTodos() {
-    try{
-        const data = await sql`SELECT * FROM todos`;
-        return data;
-    } catch(error) {
+export async function fetchTodos(): Promise<Todo[]> {
+    try {
+        const result = await sql`SELECT * FROM todos`;
+        return result as Todo[];
+    } catch (error) {
         console.error('Database error:', error);
         throw new Error('Failed to fetch todo data.');
     }
@@ -24,4 +24,4 @@ export async function postTodos(formData: FormData) {
       INSERT INTO todos (title, completed, deadline, created_at, notes)
       VALUES (${title.trim()}, false, ${deadline ? new Date(deadline).toISOString() : null}, ${new Date().toISOString()}, ${notes || null})
     `;
-  }
+}

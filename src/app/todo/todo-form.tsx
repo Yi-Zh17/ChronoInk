@@ -2,10 +2,8 @@
 import { useState, useTransition } from 'react';
 import { Dialog } from '@headlessui/react';
 import { Plus } from 'lucide-react';
-import { neon } from '@neondatabase/serverless';
 import { postTodos } from '../lib/data';
 
-const sql = neon(process.env.NEXT_PUBLIC_DATABASE_URL!);
 
 export default function AddTodo() {
   const [isOpen, setIsOpen] = useState(false);
