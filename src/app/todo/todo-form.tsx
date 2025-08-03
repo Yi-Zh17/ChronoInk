@@ -1,15 +1,9 @@
-'use client';
-
 import { Dialog } from '@headlessui/react';
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 
-type Props = {
-  onTodoAdded: () => void;
-};
 
-
-export default function AddTodo({onTodoAdded} : Props) {
+export default function AddTodo({onTodoAdded} : {onTodoAdded: ()=> void;}) {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [deadline, setDeadline] = useState('');

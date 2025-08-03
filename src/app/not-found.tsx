@@ -1,5 +1,4 @@
 import { Construction } from "lucide-react"
-import "./global.css"
 
 export default function Custom404() {
     return (

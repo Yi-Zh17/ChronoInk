@@ -1,15 +1,10 @@
 'use client';
-import { Todo } from "./page";
-import { useState } from "react";
+import { Todo } from "../lib/definition";
 
-type Props = {
-    todos: Todo[];
-    fetchTodos: () => void;
-};
 
-export default function TodoList({todos, fetchTodos}: Props) {
+export default function TodoList({todos, fetchTodos} : {todos: Todo[], fetchTodos: () => void}) {
     return (
-        <div className='bg-gray-100 mt-10 p-2 border-3 border-gray-300'>
+        <div className='bg-gray-100 mt-10 p-2 border-3 border-gray-300 w-full'>
             <ul className='space-y-2 divide-y-2 divide-gray-300'>
                 {todos.map((todo) => (
                     <li
