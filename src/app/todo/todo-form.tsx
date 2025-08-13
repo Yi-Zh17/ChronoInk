@@ -1,19 +1,34 @@
 'use client';
 import { useState, useTransition } from 'react';
 import { Dialog } from '@headlessui/react';
-import { Plus } from 'lucide-react';
+import { Plus, LoaderCircle } from 'lucide-react';
 import { postTodos } from '../lib/data';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import DateTimeDialPicker from '../component/wheel-time-picker';
 
 
 export default function AddTodo() {
   const router = useRouter();
-  
+
+  const currentTime = new Date();
+
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
+  const [year, setYear] = useState(currentTime.getFullYear().toString());
+  const [month, setMonth] = useState((currentTime.getMonth()+1).toString().padStart(2, "0"));
+  const [day, setDay] = useState(currentTime.getDate().toString().padStart(2, "0"));
+  const [hour, setHour] = useState(currentTime.getHours().toString().padStart(2, "0"));
+  const [minute, setMinute] = useState(currentTime.getMinutes().toString().padStart(2, "0"));
   const [deadline, setDeadline] = useState('');
   const [notes, setNotes] = useState('');
   const [loading, startTransition] = useTransition();
+
+
+  const years = Array.from({ length: 201 }, (_, i) => String(currentTime.getFullYear() + i));
+  const months = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "0"));
+  const days = Array.from({ length: 31 }, (_, i) => String(i +  1).padStart(2, "0"));
+  const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
+  const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, "0"));
 
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,6 +37,11 @@ export default function AddTodo() {
       const formData = new FormData(e.currentTarget);
       await postTodos(formData);
       setTitle('');
+      setYear(currentTime.getFullYear().toString());
+      setMonth((currentTime.getMonth()+1).toString().padStart(2, "0"));
+      setDay(currentTime.getDate().toString().padStart(2, "0"));
+      setHour(currentTime.getHours().toString().padStart(2, "0"));
+      setMinute(currentTime.getMinutes().toString().padStart(2, "0"));
       setDeadline('');
       setNotes('');
       setIsOpen(false);
@@ -33,10 +53,10 @@ export default function AddTodo() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-white text-black px-4 py-2 rounded-xl hover:bg-gray-100 active:bg-gray-300 flex w-35 justify-center border-3 border-gray-300"
+        className="bg-white text-black px-4 py-2 rounded-xl hover:bg-gray-100 active:bg-gray-300 flex w-38 justify-center border-3 border-gray-400 items-center"
       >
         <Plus />
-        <p className='ml-2'>Add Todo</p>
+        <p className='ml-2 font-bold text-lg'>Add Todo</p>
       </button>
 
       <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
@@ -61,13 +81,12 @@ export default function AddTodo() {
                 className="w-full border rounded p-2"
                 required
               />
-              <input
-                type="datetime-local"
-                name="deadline"
-                value={deadline}
-                onChange={e => setDeadline(e.target.value)}
-                className="w-full border rounded p-2"
-              />
+              <DateTimeDialPicker year={year} setYear={setYear}
+                month={month} setMonth={setMonth}
+                day={day} setDay={setDay}
+                hour={hour} setHour={setHour}
+                minute={minute} setMinute={setMinute} />
+              <input type="hidden" name="deadline" value={`${year}-${month}-${day} ${hour}:${minute}:00`} />
               <textarea
                 name="notes"
                 placeholder="Notes"
@@ -89,7 +108,10 @@ export default function AddTodo() {
                   disabled={loading}
                   className="bg-gray-600 text-white px-4 py-2 rounded disabled:opacity-50"
                 >
-                  {loading ? 'Saving...' : 'Save Todo'}
+                  <div>
+                    {loading ? <LoaderCircle className="animate-spin" /> : 'Add Todo'}
+                  </div>
+
                 </button>
               </div>
             </form>

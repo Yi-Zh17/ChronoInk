@@ -1,13 +1,12 @@
 import TodoForm from './todo-form';
 import TodoList from './todo-list';
-import { fetchTodos } from '../lib/data';
 
-export default async function TodoPage() {
-    const todos = await fetchTodos();
+
+export default function TodoPage() {
     return (
         <>
             <TodoForm />
-            <TodoList todos={todos} />
+            <TodoList />
         </>
     );
 }
