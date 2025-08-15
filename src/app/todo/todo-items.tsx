@@ -5,9 +5,9 @@ import { Todo } from "../lib/definition";
 import DateTimeDialPicker from "../component/wheel-time-picker";
 import { LoaderCircle, Trash2 } from "lucide-react";
 import { Check } from "lucide-react";
-import { updateTodos } from "../lib/data";
+import { deleteTodos, updateTodos } from "../lib/data";
 
-export default function TodoItemDialog({ todo }: { todo: Todo }) {
+export default function TodoItemDialog({ todo, refreshTodosAction }: { todo: Todo, refreshTodosAction: () => void }) {
 
     const [isOpen, setIsOpen] = useState(false);
     const [deadline, setDeadline] = useState(todo.deadline);
@@ -35,9 +35,17 @@ export default function TodoItemDialog({ todo }: { todo: Todo }) {
             const formData = new FormData(e.currentTarget);
             await updateTodos(formData);
             setIsOpen(false);
-            
+            refreshTodosAction();
         });
     };
+
+    const handleDelete = (id: number) => {
+        startTransition(async () => {
+            await deleteTodos(id);
+            setIsOpen(false);
+            refreshTodosAction();
+        })
+    }
 
     return (
         <>
@@ -94,7 +102,7 @@ export default function TodoItemDialog({ todo }: { todo: Todo }) {
                                     <button
                                         type="button"
                                         onClick={() => {
-                                            alert("Deleted!"); // Replace with your delete action
+                                            handleDelete(todo.id);
                                             setConfirmMode(false);
                                         }}
                                         className={`p-2 h-12 w-12 bg-white rounded-full border-2 border-gray-400 flex items-center justify-center transition-all duration-300 ease-out absolute left-0 ${confirmMode ? "translate-x-16 rotate-360 opacity-100 pointer-events-auto active:scale-90" : "opacity-0 pointer-events-none"}`}

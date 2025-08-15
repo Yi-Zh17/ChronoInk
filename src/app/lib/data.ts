@@ -67,3 +67,9 @@ export async function updateTodos(formData:FormData) {
 	WHERE id = ${id}
 	`
 }
+
+export async function deleteTodos(id: number) {
+	await sql`
+	DELETE FROM todos WHERE id = ${id}
+	`
+}

@@ -1,21 +1,15 @@
 'use client';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from "react";
+import { fetchTodos } from "../lib/data";
+import { Todo } from "../lib/definition";
 import TodoItemDialog from "./todo-items";
-import { Todo } from '../lib/definition';
-import { fetchTodos } from '../lib/data';
 
 export default function TodoList() {
   const [filter, setFilter] = useState<'all' | 'completed' | 'uncompleted'>('uncompleted');
   const [page, setPage] = useState(1);
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  async function getTodoWithFilter({
-    filter,
-    page,
-  }: {
-    filter: 'all' | 'completed' | 'uncompleted';
-    page: number;
-  }) {
+  async function getTodoWithFilter({ filter, page }: { filter: 'all' | 'completed' | 'uncompleted'; page: number; }) {
     let completed: boolean | undefined;
     if (filter === 'completed') completed = true;
     else if (filter === 'uncompleted') completed = false;
@@ -23,7 +17,6 @@ export default function TodoList() {
     setTodos(todos);
   }
 
-  // Call getTodoWithFilter whenever filter or page changes
   useEffect(() => {
     getTodoWithFilter({ filter, page });
   }, [filter, page]);
@@ -53,7 +46,11 @@ export default function TodoList() {
     <div className='bg-gray-100 mt-5 p-2 border-3 border-gray-400 w-full rounded-xl'>
         <ul className='space-y-2 divide-y-2 divide-gray-300'>
           {todos.map((todo) => (
-            <TodoItemDialog todo={todo} key={todo.id} />
+            <TodoItemDialog
+              key={todo.id}
+              todo={todo}
+              refreshTodosAction={() => getTodoWithFilter({ filter, page })}
+            />
           ))}
         </ul>
       <div className="flex justify-center gap-2 mt-4">
