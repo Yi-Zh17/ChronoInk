@@ -5,7 +5,7 @@ import { Todo } from '../lib/definition';
 import { fetchTodos } from '../lib/data';
 
 export default function TodoList() {
-  const [filter, setFilter] = useState<'all' | 'completed' | 'uncompleted'>('all');
+  const [filter, setFilter] = useState<'all' | 'completed' | 'uncompleted'>('uncompleted');
   const [page, setPage] = useState(1);
   const [todos, setTodos] = useState<Todo[]>([]);
 
@@ -29,8 +29,8 @@ export default function TodoList() {
   }, [filter, page]);
 
   return (
-    <div className='bg-gray-100 mt-8 p-2 border-3 border-gray-400 w-full rounded-xl'>
-      <div className="flex gap-2 mb-4">
+    <>
+    <div className="flex gap-2 mt-5">
         <button
           className={`px-3 py-1 rounded-md ${filter === 'uncompleted' ? 'bg-gray-500 text-white' : 'bg-white border-2 border-black/40'}`}
           onClick={() => { setFilter('uncompleted'); setPage(1); }}
@@ -50,6 +50,7 @@ export default function TodoList() {
           All
         </button>
       </div>
+    <div className='bg-gray-100 mt-5 p-2 border-3 border-gray-400 w-full rounded-xl'>
         <ul className='space-y-2 divide-y-2 divide-gray-300'>
           {todos.map((todo) => (
             <TodoItemDialog todo={todo} key={todo.id} />
@@ -72,5 +73,6 @@ export default function TodoList() {
         </button>
       </div>
     </div >
+    </>
   );
 }

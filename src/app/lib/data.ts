@@ -4,18 +4,6 @@ import { Todo } from './definition';
 
 const sql = neon(`${process.env.DATABASE_URL}`);
 
-/*
-export async function fetchTodos(): Promise<Todo[]> {
-    try {
-        const result = await sql`SELECT * FROM todos`;
-        return result as Todo[];
-    } catch (error) {
-        console.error('Database error:', error);
-        throw new Error('Failed to fetch todo data.');
-    }
-}
-*/
-
 export async function fetchTodos({
   completed,
   page = 1,
@@ -62,4 +50,20 @@ export async function postTodos(formData: FormData) {
       INSERT INTO todos (title, completed, deadline, created_at, notes)
       VALUES (${title.trim()}, false, ${deadline ? new Date(deadline).toISOString() : null}, ${new Date().toISOString()}, ${notes || null})
     `;
+}
+
+export async function updateTodos(formData:FormData) {
+	const id_str = formData.get('id') as string;
+	const id = parseInt(id_str);
+	const title = formData.get('title') as string;
+    const deadline = formData.get('deadline') as string;
+    const notes = formData.get('notes') as string;
+
+	if(!title.trim()) return;
+
+	await sql`
+	UPDATE todos
+	SET title = ${title}, deadline = ${deadline}, notes = ${notes}
+	WHERE id = ${id}
+	`
 }

@@ -19,16 +19,8 @@ export default function AddTodo() {
   const [day, setDay] = useState(currentTime.getDate().toString().padStart(2, "0"));
   const [hour, setHour] = useState(currentTime.getHours().toString().padStart(2, "0"));
   const [minute, setMinute] = useState(currentTime.getMinutes().toString().padStart(2, "0"));
-  const [deadline, setDeadline] = useState('');
   const [notes, setNotes] = useState('');
   const [loading, startTransition] = useTransition();
-
-
-  const years = Array.from({ length: 201 }, (_, i) => String(currentTime.getFullYear() + i));
-  const months = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, "0"));
-  const days = Array.from({ length: 31 }, (_, i) => String(i +  1).padStart(2, "0"));
-  const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
-  const minutes = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, "0"));
 
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,7 +34,6 @@ export default function AddTodo() {
       setDay(currentTime.getDate().toString().padStart(2, "0"));
       setHour(currentTime.getHours().toString().padStart(2, "0"));
       setMinute(currentTime.getMinutes().toString().padStart(2, "0"));
-      setDeadline('');
       setNotes('');
       setIsOpen(false);
       router.refresh();
@@ -111,7 +102,6 @@ export default function AddTodo() {
                   <div>
                     {loading ? <LoaderCircle className="animate-spin" /> : 'Add Todo'}
                   </div>
-
                 </button>
               </div>
             </form>
