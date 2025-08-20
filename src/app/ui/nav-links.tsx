@@ -1,5 +1,7 @@
+'use client';
 import Link from 'next/link';
-import {House, ChartColumn, CalendarDays, LayoutList, Sprout} from 'lucide-react';
+import { House, ChartColumn, CalendarDays, LayoutList, Sprout } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 
 class link {
@@ -16,13 +18,14 @@ class link {
 
 const home = new link(House, "Home", "/");
 const stats = new link(ChartColumn, "Stats", "/stats")
-const habits = new link(Sprout, "Habits", "habits");
-const calendar = new link(CalendarDays, "Calendar", "calendar");
-const todo = new link(LayoutList, "Todo", "todo");
+const habits = new link(Sprout, "Habits", "/habits");
+const calendar = new link(CalendarDays, "Calendar", "/calendar");
+const todo = new link(LayoutList, "Todo", "/todo");
 
 const links = [home, stats, habits, calendar, todo];
 
 export default function NavLinks() {
+    const pathname = usePathname();
     return (
         <>
             {links.map((link) => {
@@ -31,10 +34,10 @@ export default function NavLinks() {
                     <Link
                         key={link.name}
                         href={link.href}
-                        className='m-0 p-4 size-20 flex flex-col items-center hover:bg-gray-100'>
-                            <LinkIcon />
-                            <p>{link.name}</p>
-                        </Link>
+                        className={`m-0 p-4 size-20 flex flex-col items-center hover:bg-gray-100 ${pathname === link.href ? 'bg-gray-200' : ''}`}>
+                        <LinkIcon />
+                        <p>{link.name}</p>
+                    </Link>
                 );
             })}
         </>
