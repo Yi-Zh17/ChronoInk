@@ -3,20 +3,21 @@ import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState, useTransition } from "react";
 import { Todo } from "../lib/definition";
 import DateTimeDialPicker from "../component/wheel-time-picker";
-import { LoaderCircle, Trash2 } from "lucide-react";
+import { Circle, CircleCheckBig, LoaderCircle, Trash2 } from "lucide-react";
 import { Check } from "lucide-react";
-import { deleteTodos, updateTodos } from "../lib/data";
+import { completeTodos, deleteTodos, updateTodos } from "../lib/data";
 
 export default function TodoItemDialog({ todo, refreshTodosAction }: { todo: Todo, refreshTodosAction: () => void }) {
 
     const [isOpen, setIsOpen] = useState(false);
-    const [deadline, setDeadline] = useState(todo.deadline);
+    const [isCompleted, setIsCompleted] = useState(todo.completed);
     const [title, setTitle] = useState(todo.title);
     const [notes, setNotes] = useState(todo.notes || '');
     const [loading, startTransition] = useTransition();
+    const [complete, startCompleteTransition] = useTransition();
     const [confirmMode, setConfirmMode] = useState(false);
 
-    const ddl = new Date(deadline);
+    const ddl = new Date(todo.deadline);
     const n_year = ddl.getFullYear().toString();
     const n_month = (ddl.getMonth() + 1).toString().padStart(2, "0");
     const n_day = ddl.getDate().toString().padStart(2, "0");
@@ -47,16 +48,39 @@ export default function TodoItemDialog({ todo, refreshTodosAction }: { todo: Tod
         })
     }
 
+    const handleComplete = (id: number) => {
+        const newCompleted = !isCompleted;
+        setIsCompleted((prev) => {
+            return newCompleted;
+        });
+        startCompleteTransition(async () => {
+            await completeTodos(id, newCompleted);
+            refreshTodosAction();
+        });
+    }
+
     return (
         <>
             <li
                 key={todo.id}
-                onClick={() => setIsOpen(true)}
-                className="flex space-x-20 flex-col cursor-pointer hover:bg-gray-200 p-3 rounded-md last:border-b-2 last:border-gray-500"
+                className="flex space-x-20 flex-col cursor-pointer p-3 rounded-md last:border-b-2 last:border-gray-500 space-y-2"
             >
-                <h2 className='text-xl font-medium'>{todo.title}</h2>
-                <div className='ml-auto'>
-                    <p>Deadline: {new Date(todo.deadline).toLocaleString(undefined, {
+                <h2
+                    className='text-xl font-medium w-full p-2 hover:bg-gray-300 rounded-lg'
+                    onClick={() => setIsOpen(true)}>{todo.title}</h2>
+                <div className='flex justify-center items-center'>
+                    <button
+                        onClick={() => {
+                            handleComplete(todo.id);
+                        }}
+                        disabled={complete}
+                        className={`ml-1 hover:scale-120 transition-all duration-100 ${complete ? 'animate-pulse' : ''}`}
+                    >
+                        {isCompleted ? <CircleCheckBig /> : <Circle />}
+                    </button>
+                    <p
+                        className="ml-auto"
+                    >Deadline: {new Date(todo.deadline).toLocaleString(undefined, {
                         hour12: false,
                         year: 'numeric',
                         month: '2-digit',
@@ -73,7 +97,7 @@ export default function TodoItemDialog({ todo, refreshTodosAction }: { todo: Tod
                     <DialogPanel className="@container max-w-lg space-y-4 border-gray-500 border-3 bg-white py-4 px-8 w-2/3 h-2/3 rounded-xl drop-shadow-2xl min-w-md">
                         <form className="flex flex-col w-full h-full space-y-3 mb-0" onSubmit={handleSubmit}>
                             <input type="hidden" name="id" value={todo.id} />
-                                <input className="mt-3 text-center font-bold text-2xl border-b-2 border-gray-400 pb-1" type="text" value={title} name="title" onChange={e => { setTitle(e.target.value) }} placeholder="Title is required" required />
+                            <input className="mt-3 text-center font-bold text-2xl border-b-2 border-gray-400 pb-1" type="text" value={title} name="title" onChange={e => { setTitle(e.target.value) }} placeholder="Title is required" required />
                             <div className="w-full h-1/8 mt-3">
                                 <DateTimeDialPicker year={year} setYear={setYear} month={month} setMonth={setMonth} day={day} setDay={setDay} hour={hour} setHour={setHour} minute={minute} setMinute={setMinute} />
                             </div>
@@ -122,7 +146,7 @@ export default function TodoItemDialog({ todo, refreshTodosAction }: { todo: Tod
                                         className="bg-black/80 text-white px-4 py-2 rounded-xl hover:bg-gray-500 active:bg-gray-800"
                                         type="submit"
                                         disabled={loading}>
-                                            <div>{loading? <LoaderCircle className="animate-spin" /> : 'Save'}</div>
+                                        <div>{loading ? <LoaderCircle className="animate-spin" /> : 'Save'}</div>
                                     </button>
                                 </div>
                             </div>

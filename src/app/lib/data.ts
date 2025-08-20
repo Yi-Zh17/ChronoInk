@@ -73,3 +73,11 @@ export async function deleteTodos(id: number) {
 	DELETE FROM todos WHERE id = ${id}
 	`
 }
+
+export async function completeTodos(id: number, isCompleted: boolean) {
+  await sql`
+  UPDATE todos
+  SET completed = ${isCompleted ? 'TRUE' : 'FALSE'}
+  WHERE id = ${id}
+  `
+}
