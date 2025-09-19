@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { House, ChartColumn, CalendarDays, LayoutList, Sprout } from 'lucide-react';
+import { House, ChartColumn, CalendarDays, LayoutList,  Hourglass} from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 
@@ -18,11 +18,11 @@ class link {
 
 const home = new link(House, "Home", "/");
 const stats = new link(ChartColumn, "Stats", "/stats")
-const habits = new link(Sprout, "Habits", "/habits");
+const focus = new link(Hourglass, "Focus", "/focus");
 const calendar = new link(CalendarDays, "Calendar", "/calendar");
 const todo = new link(LayoutList, "Todo", "/todo");
 
-const links = [home, stats, habits, calendar, todo];
+const links = [home, stats, focus, calendar, todo];
 
 export default function NavLinks() {
     const pathname = usePathname();
