@@ -11,6 +11,7 @@
 - React with Next.js
 - Tailwind CSS
 - TypeScript
+- PostgreSql
 ---
 
 ## How To Run Locally
