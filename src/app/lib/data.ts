@@ -81,3 +81,7 @@ export async function completeTodos(id: number, isCompleted: boolean) {
   WHERE id = ${id}
   `
 }
+
+export async function fetchEvents() {
+  
+}
