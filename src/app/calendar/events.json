@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "date": "2026-01-06",
+    "start_time": "08:00",
+    "end_time": "09:30",
+    "title": "Design review",
+    "description": "Walk through the sprint work with the design team",
+    "location": "Room 301"
+  },
+  {
+    "id": 2,
+    "date": "2026-01-06",
+    "start_time": "14:00",
+    "end_time": "15:00",
+    "title": "Client sync",
+    "description": "Status check and blockers with the client",
+    "location": "Video call"
+  },
+  {
+    "id": 3,
+    "date": "2026-01-07",
+    "start_time": "22:30",
+    "end_time": "23:30",
+    "title": "Night deploy",
+    "description": "Deploy the patch during low traffic hours",
+    "location": "Ops war room"
+  },
+  {
+    "id": 4,
+    "date": "2026-01-08",
+    "start_time": "06:30",
+    "end_time": "07:30",
+    "title": "Morning run",
+    "description": "Easy-paced jog with the team",
+    "location": "Riverside path"
+  },
+  {
+    "id": 5,
+    "date": "2026-01-08",
+    "start_time": "10:00",
+    "end_time": "11:30",
+    "title": "Product spec review",
+    "description": "Review latest draft of the onboarding flow",
+    "location": "Room 210"
+  },
+  {
+    "id": 6,
+    "date": "2026-01-09",
+    "start_time": "13:00",
+    "end_time": "15:30",
+    "title": "Build dashboard",
+    "description": "Heads-down build time for the analytics dashboard",
+    "location": "Desk"
+  },
+  {
+    "id": 7,
+    "date": "2026-01-10",
+    "start_time": "20:00",
+    "end_time": "23:30",
+    "title": "Release rehearsal",
+    "description": "Dry run before tomorrow's release",
+    "location": "Virtual"
+  },
+  {
+    "id": 8,
+    "date": "2026-01-11",
+    "start_time": "09:00",
+    "end_time": "10:00",
+    "title": "Weekend catch-up",
+    "description": "Light weekend catch-up session",
+    "location": "Cafe"
+  }
+]
